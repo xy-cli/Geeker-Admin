@@ -8,34 +8,38 @@ import "@/styles/common.scss";
 import "@/assets/iconfont/iconfont.scss";
 // font css
 import "@/assets/fonts/font.scss";
+// element css
+import "element-plus/dist/index.css";
+// element dark css
+import "element-plus/theme-chalk/dark/css-vars.css";
+// custom element dark css
+import "@/styles/element-dark.scss";
+// custom element css
+import "@/styles/element.scss";
+// svg icons
+import "virtual:svg-icons-register";
 // element plus
 import ElementPlus from "element-plus";
 // element icons
 import * as Icons from "@element-plus/icons-vue";
-// element css
-import "element-plus/dist/index.css";
-// element dark(内置暗黑模式)
-import "element-plus/theme-chalk/dark/css-vars.css";
-// custom element dark(自定义暗黑模式)
-import "@/styles/element-dark.scss";
-// custom element css
-import "@/styles/element.scss";
 // custom directives
 import directives from "@/directives/index";
 // vue Router
-import router from "@/routers/index";
+import router from "@/routers";
 // vue i18n
-import I18n from "@/language/index";
+import I18n from "@/languages/index";
 // pinia store
-import pinia from "@/store/index";
-// svg icons
-import "virtual:svg-icons-register";
+import pinia from "@/stores";
+// errorHandler
+import errorHandler from "@/utils/errorHandler";
 
 const app = createApp(App);
 
-// 注册element Icons组件
+app.config.errorHandler = errorHandler;
+
+// register the element Icons component
 Object.keys(Icons).forEach(key => {
-	app.component(key, Icons[key as keyof typeof Icons]);
+  app.component(key, Icons[key as keyof typeof Icons]);
 });
 
-app.use(router).use(I18n).use(pinia).use(directives).use(ElementPlus).mount("#app");
+app.use(ElementPlus).use(directives).use(router).use(I18n).use(pinia).mount("#app");
